@@ -59,8 +59,13 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          OUTPUT=$(netlify deploy --dir=dist --json 2>/dev/null)
-          URL=$(echo "$OUTPUT" | jq -r '.deploy_url')
+          OUTPUT=$(netlify deploy --dir=dist --site "$NETLIFY_SITE_ID" --json 2>&1)
+          echo "$OUTPUT"
+          URL=$(echo "$OUTPUT" | jq -r '.deploy_url // empty')
+          if [ -z "$URL" ]; then
+            echo "::error::No se obtuvo la preview URL. Verificá los secrets NETLIFY_AUTH_TOKEN y NETLIFY_SITE_ID."
+            exit 1
+          fi
           echo "NETLIFY_URL=$URL" >> $GITHUB_OUTPUT
           echo "Preview URL: $URL"
 
