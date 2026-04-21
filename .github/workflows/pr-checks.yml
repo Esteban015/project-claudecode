@@ -1,0 +1,109 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [master]
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  # ── 1. Build ────────────────────────────────────────────────────────────────
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Upload dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  # ── 2. Deploy preview to Netlify ────────────────────────────────────────────
+  preview:
+    name: Deploy Preview
+    runs-on: ubuntu-latest
+    needs: build
+    outputs:
+      preview_url: ${{ steps.deploy.outputs.NETLIFY_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Deploy preview
+        id: deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          OUTPUT=$(netlify deploy --dir=dist --json 2>/dev/null)
+          URL=$(echo "$OUTPUT" | jq -r '.deploy_url')
+          echo "NETLIFY_URL=$URL" >> $GITHUB_OUTPUT
+          echo "Preview URL: $URL"
+
+      - name: Comment preview URL on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.deploy.outputs.NETLIFY_URL }}';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `### 🔍 Preview desplegado\n\n**URL:** ${url}\n\nLos tests de TestSprite se están ejecutando contra esta preview.`,
+            });
+
+  # ── 3. TestSprite – tests automatizados ────────────────────────────────────
+  testsprite:
+    name: TestSprite
+    runs-on: ubuntu-latest
+    needs: preview
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run TestSprite tests
+        env:
+          TESTSPRITE_API_KEY: ${{ secrets.TESTSPRITE_API_KEY }}
+          PREVIEW_URL: ${{ needs.preview.outputs.preview_url }}
+        run: |
+          npx @testsprite/testsprite-mcp@latest run \
+            --url "$PREVIEW_URL" \
+            --api-key "$TESTSPRITE_API_KEY" \
+            --plan testsprite_tests/test-plan.json \
+            --reporter junit \
+            --output testsprite-results.xml
+
+      - name: Publish test results
+        if: always()
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: testsprite-results.xml
+          check_name: TestSprite Results
+          fail_on_failure: true
