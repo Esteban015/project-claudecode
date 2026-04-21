@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const faqs = [
+  {
+    category: 'Sobre el blog',
+    items: [
+      {
+        q: '¿De qué trata este blog?',
+        a: 'Escribimos sobre desarrollo web moderno: Astro, rendimiento, SEO, herramientas frontend y buenas prácticas. El objetivo es publicar artículos prácticos que puedas aplicar el mismo día que los lees.',
+      },
+      {
+        q: '¿Con qué frecuencia se publican artículos?',
+        a: 'Intentamos publicar al menos dos artículos por mes. Puedes suscribirte al feed RSS para no perderte ninguna publicación.',
+      },
+      {
+        q: '¿Puedo sugerir un tema para un artículo?',
+        a: '¡Por supuesto! Entra en la página de Contacto y selecciona "Sugerencia de tema". Leemos todas las sugerencias y priorizamos las más solicitadas.',
+      },
+    ],
+  },
+  {
+    category: 'Contenido técnico',
+    items: [
+      {
+        q: '¿Por qué eligieron Astro para el blog?',
+        a: 'Astro genera HTML estático en tiempo de compilación, lo que resulta en páginas ultra-rápidas sin JavaScript innecesario. Además, su integración con MDX facilita escribir artículos con componentes interactivos.',
+      },
+      {
+        q: '¿Los artículos son adecuados para principiantes?',
+        a: 'Depende del artículo. Cada publicación indica el nivel recomendado en sus etiquetas. Buscamos que la mayoría sea accesible para desarrolladores con conocimientos básicos de HTML, CSS y JavaScript.',
+      },
+      {
+        q: '¿Hay código de ejemplo descargable?',
+        a: 'Sí. Los artículos que incluyen proyectos completos enlazan al repositorio de GitHub correspondiente al final del post.',
+      },
+    ],
+  },
+  {
+    category: 'Colaboraciones',
+    items: [
+      {
+        q: '¿Puedo escribir un artículo como colaborador?',
+        a: 'Sí, aceptamos colaboraciones. Escríbenos desde la página de Contacto seleccionando "Quiero colaborar" y cuéntanos el tema que quieres tratar. Revisamos cada propuesta y respondemos en un plazo de 48 horas.',
+      },
+      {
+        q: '¿Aceptan sponsors o publicidad?',
+        a: 'Aceptamos patrocinios puntuales siempre que el producto o servicio sea relevante para nuestra audiencia y no comprometa la línea editorial. Contáctanos para más información.',
+      },
+      {
+        q: '¿Cómo reporto un error en un artículo?',
+        a: 'Usa el formulario de Contacto y selecciona "Encontré un error". Describe el problema y el artículo afectado. Lo corregimos lo antes posible y te acreditamos si lo deseas.',
+      },
+    ],
+  },
+  {
+    category: 'Privacidad y datos',
+    items: [
+      {
+        q: '¿Recopilan datos de los visitantes?',
+        a: 'Este blog no utiliza cookies de rastreo ni analíticas de terceros. No vendemos ni compartimos datos personales.',
+      },
+      {
+        q: '¿Qué pasa con los datos que envío en el formulario de contacto?',
+        a: 'Los datos del formulario se usan exclusivamente para responder a tu mensaje. No se almacenan en bases de datos de terceros ni se comparten con nadie.',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Preguntas frecuentes"
+  description="Respuestas a las dudas más comunes sobre el blog, el contenido técnico, colaboraciones y privacidad."
+>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 animate-fade-up">
+
+    <!-- Hero -->
+    <div class="mb-12">
+      <p class="text-accent-primary font-semibold text-sm mb-2 uppercase tracking-wider">FAQs</p>
+      <h1 class="text-4xl sm:text-5xl font-bold text-text-primary leading-tight mb-4">
+        Preguntas frecuentes
+      </h1>
+      <p class="text-lg text-text-muted leading-relaxed">
+        Aquí encontrarás respuesta a las dudas más comunes. Si no encuentras lo que buscas,
+        <a href="/contacto" class="text-accent-primary hover:underline">escríbenos</a>.
+      </p>
+    </div>
+
+    <!-- FAQ sections -->
+    <div class="space-y-10">
+      {faqs.map((section) => (
+        <section>
+          <h2 class="text-xs font-semibold text-text-muted uppercase tracking-widest mb-4 pb-2 border-b border-border">
+            {section.category}
+          </h2>
+          <div class="space-y-2">
+            {section.items.map((faq, i) => (
+              <details
+                class="group bg-bg-secondary border border-border rounded-xl overflow-hidden"
+                id={`faq-${section.category.toLowerCase().replace(/\s+/g, '-')}-${i}`}
+              >
+                <summary class="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none select-none hover:bg-bg-secondary/80 transition-colors">
+                  <span class="text-sm font-medium text-text-primary">{faq.q}</span>
+                  <svg
+                    class="w-4 h-4 text-text-muted shrink-0 transition-transform duration-200 group-open:rotate-180"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div class="px-5 pb-5 pt-1">
+                  <p class="text-sm text-text-muted leading-relaxed">{faq.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-14 bg-bg-secondary border border-border rounded-xl p-8 text-center">
+      <h3 class="text-xl font-bold text-text-primary mb-2">¿Tienes otra pregunta?</h3>
+      <p class="text-text-muted text-sm mb-6">
+        Si no encontraste lo que buscabas, escríbenos directamente.
+      </p>
+      <a
+        href="/contacto"
+        class="inline-block px-6 py-2.5 bg-accent-primary hover:bg-accent-hover text-white text-sm font-medium rounded-lg transition-colors"
+      >
+        Ir a Contacto →
+      </a>
+    </div>
+
+  </div>
+</BaseLayout>
