@@ -1,0 +1,32 @@
+---
+interface Props {
+  tags: { name: string; count: number }[];
+}
+
+const { tags } = Astro.props;
+const maxCount = Math.max(...tags.map((t) => t.count), 1);
+---
+
+<div class="bg-bg-secondary border border-border rounded-xl p-5">
+  <h3 class="text-sm font-semibold text-text-muted uppercase tracking-wider mb-4">Etiquetas</h3>
+  <div class="flex flex-wrap gap-2">
+    {
+      tags.map(({ name, count }) => {
+        const weight = Math.ceil((count / maxCount) * 3);
+        const sizeClass = weight >= 3 ? 'text-base' : weight === 2 ? 'text-sm' : 'text-xs';
+        return (
+          <a
+            href={`/tag/${name}`}
+            class:list={[
+              sizeClass,
+              'text-text-muted border border-border px-2.5 py-1 rounded-full hover:border-accent-primary hover:text-accent-primary transition-colors',
+            ]}
+          >
+            #{name}
+            <span class="ml-1 text-xs opacity-60">({count})</span>
+          </a>
+        );
+      })
+    }
+  </div>
+</div>

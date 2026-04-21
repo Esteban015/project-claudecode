@@ -1,0 +1,144 @@
+project:
+  name: blog-astro
+  version: 1.0.0
+  type: frontend
+  framework: Astro 4.x
+  language: TypeScript
+  port: 4321
+
+tech_stack:
+  framework: Astro 4.16
+  styling: Tailwind CSS 3.4 + @tailwindcss/typography
+  content: MDX / Markdown via Astro Content Collections
+  validation: Zod 3.23
+  search: Pagefind (static, build-time index)
+  deployment: Netlify (SSG static output)
+  rss: "@astrojs/rss"
+  sitemap: "@astrojs/sitemap"
+
+features:
+  - id: F-01
+    name: Blog post listing
+    description: Homepage and /blog page with paginated list of published posts ordered by date descending
+    routes: ["/", "/blog", "/blog/[page]"]
+
+  - id: F-02
+    name: Individual post page
+    description: Renders each MDX article with title, description, cover image, reading time, category, tags, prev/next navigation
+    routes: ["/blog/[anio]/[mes]/[slug]"]
+
+  - id: F-03
+    name: Category filtering
+    description: Filter posts by category with semantic URL
+    routes: ["/categoria/[slug]"]
+
+  - id: F-04
+    name: Tag filtering + Tag Cloud
+    description: Filter posts by tag; tag cloud shown in sidebar
+    routes: ["/tag/[slug]"]
+
+  - id: F-05
+    name: Blog archive
+    description: Chronological index of all posts grouped by year
+    routes: ["/blog/archivo"]
+
+  - id: F-06
+    name: SEO metadata
+    description: Per-page meta title, description, Open Graph image, Twitter Card, canonical URL, structured data JSON-LD Article schema
+    component: src/components/SEO.astro
+
+  - id: F-07
+    name: RSS Feed
+    description: RSS feed at /rss.xml with all published posts
+    routes: ["/rss.xml"]
+
+  - id: F-08
+    name: Sitemap
+    description: Auto-generated sitemap at /sitemap-index.xml
+    routes: ["/sitemap-index.xml"]
+
+  - id: F-09
+    name: Newsletter subscription form
+    description: Email form in footer and optionally in posts; client-side email validation; sends to external provider; shows confirmation toast
+    component: src/components/NewsletterForm.astro
+
+  - id: F-10
+    name: Pagefind search
+    description: Client-side search via Pagefind; lazy-loaded when search icon clicked; shows message in dev mode
+    component: src/components/Header.astro
+
+  - id: F-11
+    name: Reading time
+    description: Automatically calculated reading time shown on post cards and individual posts (200 wpm)
+    util: src/utils/posts.ts
+
+  - id: F-12
+    name: Dark theme UI
+    description: Fully dark theme with purple accent (#7C3AED), responsive mobile-first layout, sticky header with backdrop blur
+    components: [Header, Footer, PostCard, TagCloud, Pagination]
+
+pages:
+  - path: /
+    component: src/pages/index.astro
+    description: Homepage with hero, latest posts grid (6 posts), tag cloud sidebar, categories sidebar
+
+  - path: /blog
+    component: src/pages/blog/index.astro
+    description: Full blog listing, 9 posts per page
+
+  - path: /blog/[page]
+    component: src/pages/blog/[page].astro
+    description: Paginated blog pages 2+
+
+  - path: /blog/[anio]/[mes]/[slug]
+    component: src/pages/blog/[anio]/[mes]/[slug].astro
+    description: Individual post with MDX content
+
+  - path: /blog/archivo
+    component: src/pages/blog/archivo.astro
+    description: Archive page grouped by year
+
+  - path: /categoria/[slug]
+    component: src/pages/categoria/[slug].astro
+    description: Posts filtered by category
+
+  - path: /tag/[slug]
+    component: src/pages/tag/[slug].astro
+    description: Posts filtered by tag
+
+components:
+  - name: Header
+    path: src/components/Header.astro
+    description: Sticky nav with logo, links, search toggle (Pagefind)
+
+  - name: Footer
+    path: src/components/Footer.astro
+    description: Logo, RSS link, newsletter form, nav links, copyright
+
+  - name: PostCard
+    path: src/components/PostCard.astro
+    description: Card with cover image, category pill, date, reading time, title, description, tags
+
+  - name: SEO
+    path: src/components/SEO.astro
+    description: All meta tags, OG, Twitter Card, canonical, JSON-LD
+
+  - name: NewsletterForm
+    path: src/components/NewsletterForm.astro
+    description: Email input, submit button, client validation, success/error message
+
+  - name: TagCloud
+    path: src/components/TagCloud.astro
+    description: Weighted tag links with count
+
+  - name: Pagination
+    path: src/components/Pagination.astro
+    description: Prev/next page navigation
+
+content:
+  schema: src/content/config.ts
+  posts_dir: src/content/posts
+  sample_posts:
+    - bienvenida-al-blog.mdx
+    - astro-para-blogs.mdx
+    - seo-en-2026.mdx

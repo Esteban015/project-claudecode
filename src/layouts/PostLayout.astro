@@ -1,0 +1,141 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  readingTime: number;
+  prevPost?: { title: string; href: string };
+  nextPost?: { title: string; href: string };
+}
+
+const { post, readingTime, prevPost, nextPost } = Astro.props;
+const { title, description, publishedAt, updatedAt, category, tags, cover, seoTitle, seoDescription } = post.data;
+
+const siteUrl = Astro.site?.href ?? '';
+const ogImage = cover?.src
+  ? new URL(cover.src, siteUrl).href
+  : `${siteUrl}og/default.png.svg`;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  datePublished: publishedAt.toISOString(),
+  dateModified: (updatedAt ?? publishedAt).toISOString(),
+  image: ogImage,
+  author: {
+    '@type': 'Person',
+    name: 'Esteban',
+    url: siteUrl,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Mi Blog',
+    logo: { '@type': 'ImageObject', url: `${siteUrl}favicon.svg` },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': Astro.url.href },
+};
+
+const formattedDate = publishedAt.toLocaleDateString('es-ES', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  title={seoTitle ?? title}
+  description={seoDescription ?? description}
+  ogImage={ogImage}
+  ogType="article"
+  canonicalURL={Astro.url.href}
+  publishedAt={publishedAt}
+  updatedAt={updatedAt}
+  structuredData={structuredData}
+>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 py-12 animate-fade-up">
+    <header class="mb-10">
+      <div class="flex items-center gap-3 mb-4 text-sm">
+        <a
+          href={`/categoria/${category}`}
+          class="bg-accent-primary/20 text-accent-primary px-3 py-1 rounded-full hover:bg-accent-primary/30 transition-colors"
+        >
+          {category}
+        </a>
+        <span class="text-text-muted">{formattedDate}</span>
+        <span class="text-text-muted">·</span>
+        <span class="text-text-muted">{readingTime} min de lectura</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-bold text-text-primary leading-tight mb-4">
+        {title}
+      </h1>
+      <p class="text-lg text-text-muted leading-relaxed">{description}</p>
+
+      {
+        cover && (
+          <div class="mt-8 rounded-xl overflow-hidden border border-border">
+            <img
+              src={cover.src}
+              alt={cover.alt}
+              class="w-full object-cover aspect-video"
+              loading="eager"
+            />
+          </div>
+        )
+      }
+    </header>
+
+    <div class="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-a:text-accent-primary prose-a:no-underline hover:prose-a:underline prose-code:font-mono prose-pre:bg-bg-secondary prose-pre:border prose-pre:border-border">
+      <slot />
+    </div>
+
+    <footer class="mt-12 pt-8 border-t border-border">
+      {
+        tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mb-8">
+            {tags.map((tag) => (
+              <a
+                href={`/tag/${tag}`}
+                class="text-sm text-text-muted bg-bg-secondary border border-border px-3 py-1 rounded-full hover:border-accent-primary hover:text-accent-primary transition-colors"
+              >
+                #{tag}
+              </a>
+            ))}
+          </div>
+        )
+      }
+
+      <nav class="grid grid-cols-2 gap-4">
+        {
+          prevPost && (
+            <a
+              href={prevPost.href}
+              class="group flex flex-col gap-1 p-4 bg-bg-secondary border border-border rounded-xl hover:border-accent-primary transition-colors"
+            >
+              <span class="text-xs text-text-muted">← Anterior</span>
+              <span class="text-sm font-medium group-hover:text-accent-primary transition-colors line-clamp-2">
+                {prevPost.title}
+              </span>
+            </a>
+          )
+        }
+        {
+          nextPost && (
+            <a
+              href={nextPost.href}
+              class="group flex flex-col gap-1 p-4 bg-bg-secondary border border-border rounded-xl hover:border-accent-primary transition-colors col-start-2 text-right"
+            >
+              <span class="text-xs text-text-muted">Siguiente →</span>
+              <span class="text-sm font-medium group-hover:text-accent-primary transition-colors line-clamp-2">
+                {nextPost.title}
+              </span>
+            </a>
+          )
+        }
+      </nav>
+    </footer>
+  </article>
+</BaseLayout>

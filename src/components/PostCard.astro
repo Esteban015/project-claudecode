@@ -1,0 +1,81 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  readingTime: number;
+}
+
+const { post, readingTime } = Astro.props;
+const { title, description, publishedAt, category, tags, cover } = post.data;
+
+const year = publishedAt.getFullYear();
+const month = String(publishedAt.getMonth() + 1).padStart(2, '0');
+const href = `/blog/${year}/${month}/${post.slug}`;
+
+const formattedDate = publishedAt.toLocaleDateString('es-ES', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<article class="group bg-bg-secondary border border-border rounded-xl overflow-hidden hover:border-accent-primary transition-all duration-300 hover:shadow-lg hover:shadow-accent-primary/5 flex flex-col">
+  {
+    cover && (
+      <a href={href} class="block overflow-hidden aspect-video">
+        <img
+          src={cover.src}
+          alt={cover.alt}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
+      </a>
+    )
+  }
+
+  <div class="p-6 flex flex-col flex-1">
+    <div class="flex items-center gap-3 mb-3 text-xs text-text-muted">
+      <a
+        href={`/categoria/${category}`}
+        class="text-accent-primary bg-accent-primary/10 px-2 py-0.5 rounded-full hover:bg-accent-primary/20 transition-colors font-medium"
+      >
+        {category}
+      </a>
+      <time datetime={publishedAt.toISOString()}>{formattedDate}</time>
+      <span>{readingTime} min</span>
+    </div>
+
+    <h2 class="text-lg font-bold text-text-primary mb-2 leading-snug group-hover:text-accent-primary transition-colors">
+      <a href={href} class="stretched-link">{title}</a>
+    </h2>
+
+    <p class="text-sm text-text-muted leading-relaxed flex-1 line-clamp-3">{description}</p>
+
+    {
+      tags.length > 0 && (
+        <div class="flex flex-wrap gap-1.5 mt-4">
+          {tags.slice(0, 3).map((tag) => (
+            <a
+              href={`/tag/${tag}`}
+              class="text-xs text-text-muted border border-border px-2 py-0.5 rounded-full hover:border-accent-primary hover:text-accent-primary transition-colors relative z-10"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .stretched-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  article {
+    position: relative;
+  }
+</style>

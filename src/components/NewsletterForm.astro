@@ -1,0 +1,81 @@
+---
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+
+<form
+  id="newsletter-form"
+  class:list={['newsletter-form', compact ? 'flex gap-2' : 'flex flex-col gap-3']}
+  novalidate
+>
+  {!compact && (
+    <p class="text-sm text-text-muted">
+      Recibe los nuevos artículos directamente en tu bandeja de entrada.
+    </p>
+  )}
+
+  <div class:list={['flex gap-2', compact ? '' : 'flex-col sm:flex-row']}>
+    <input
+      type="email"
+      name="email"
+      placeholder="tu@email.com"
+      required
+      autocomplete="email"
+      class="flex-1 px-4 py-2 bg-bg-primary border border-border rounded-lg text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-accent-primary transition-colors"
+    />
+    <button
+      type="submit"
+      class="px-4 py-2 bg-accent-primary hover:bg-accent-hover text-white text-sm font-medium rounded-lg transition-colors whitespace-nowrap"
+    >
+      Suscribirse
+    </button>
+  </div>
+
+  <p id="newsletter-message" class="text-sm hidden"></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('.newsletter-form').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const emailInput = form.querySelector<HTMLInputElement>('input[type="email"]');
+      const message = form.querySelector<HTMLParagraphElement>('#newsletter-message') ??
+        form.querySelector<HTMLParagraphElement>('[id$="newsletter-message"]');
+      const email = emailInput?.value.trim() ?? '';
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showMessage(message, '⚠ Introduce un email válido.', 'error');
+        return;
+      }
+
+      const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        // Replace ACTION_URL with your email provider's form action
+        const ACTION_URL = 'https://app.convertkit.com/forms/YOUR_FORM_ID/subscriptions';
+        const body = new FormData();
+        body.append('email_address', email);
+
+        await fetch(ACTION_URL, { method: 'POST', body });
+        showMessage(message, '✓ ¡Suscrito! Revisa tu bandeja de entrada.', 'success');
+        if (emailInput) emailInput.value = '';
+      } catch {
+        showMessage(message, '✗ Error al suscribirse. Inténtalo de nuevo.', 'error');
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  });
+
+  function showMessage(el: HTMLParagraphElement | null, text: string, type: 'success' | 'error') {
+    if (!el) return;
+    el.textContent = text;
+    el.className = `text-sm mt-1 ${type === 'success' ? 'text-green-400' : 'text-red-400'}`;
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 5000);
+  }
+</script>

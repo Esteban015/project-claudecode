@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import TagCloud from '../components/TagCloud.astro';
+import Pagination from '../components/Pagination.astro';
+import { getPublishedPosts, getReadingTime, getAllTags, getAllCategories } from '../utils/posts';
+
+const PAGE_SIZE = 6;
+const page = 1;
+
+const allPosts = await getPublishedPosts();
+const totalPages = Math.ceil(allPosts.length / PAGE_SIZE);
+const posts = allPosts.slice(0, PAGE_SIZE);
+const tags = getAllTags(allPosts);
+const categories = getAllCategories(allPosts);
+---
+
+<BaseLayout title="Mi Blog — Desarrollo Web y Tecnología">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <!-- Hero -->
+    <section class="mb-14 animate-fade-up">
+      <h1 class="text-4xl sm:text-5xl font-bold text-text-primary mb-4 leading-tight">
+        Hola, soy <span class="text-accent-primary">Esteban</span> 👋
+      </h1>
+      <p class="text-lg text-text-muted max-w-2xl leading-relaxed">
+        Escribo sobre desarrollo web, herramientas modernas y todo lo que aprendo en el camino.
+        Bienvenido a mi rincón en internet.
+      </p>
+    </section>
+
+    <div class="flex flex-col lg:flex-row gap-10">
+      <!-- Posts grid -->
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-text-primary">Últimos artículos</h2>
+          <a href="/blog" class="text-sm text-accent-primary hover:text-accent-hover transition-colors">
+            Ver todos →
+          </a>
+        </div>
+
+        {
+          posts.length === 0 ? (
+            <p class="text-text-muted">Todavía no hay artículos publicados.</p>
+          ) : (
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {posts.map((post) => (
+                <PostCard post={post} readingTime={getReadingTime(post.body)} />
+              ))}
+            </div>
+          )
+        }
+
+        <Pagination currentPage={page} totalPages={totalPages} baseUrl="/blog" />
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="w-full lg:w-72 shrink-0 space-y-6">
+        <TagCloud tags={tags} />
+
+        <div class="bg-bg-secondary border border-border rounded-xl p-5">
+          <h3 class="text-sm font-semibold text-text-muted uppercase tracking-wider mb-4">Categorías</h3>
+          <ul class="space-y-2">
+            {
+              categories.map(({ name, count }) => (
+                <li>
+                  <a
+                    href={`/categoria/${name}`}
+                    class="flex items-center justify-between text-sm text-text-muted hover:text-accent-primary transition-colors"
+                  >
+                    <span>{name}</span>
+                    <span class="text-xs bg-bg-primary px-2 py-0.5 rounded-full">{count}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,73 @@
+---
+title: "Por qué Astro es el mejor framework para un blog"
+description: "Análisis técnico de por qué Astro supera a Next.js, Gatsby y Hugo cuando el contenido es lo primero."
+publishedAt: 2026-04-15
+category: "desarrollo-web"
+tags: ["astro", "ssg", "rendimiento", "frameworks"]
+cover:
+  src: "/covers/astro.svg"
+  alt: "Logo de Astro sobre fondo oscuro"
+draft: false
+---
+
+# Por qué Astro es el mejor framework para un blog
+
+Después de años usando Gatsby, Next.js y Hugo para mis proyectos de contenido, me pasé a Astro hace seis meses y no volvería atrás. Te explico por qué.
+
+## El problema con los frameworks JavaScript clásicos
+
+Cuando usas Next.js o Gatsby para un blog estático, estás enviando al cliente un bundle JavaScript completo para renderizar... texto. Un blog donde el 95% del contenido es estático no necesita hydratación en el cliente.
+
+El resultado: Lighthouse scores mediocres y tiempos de carga innecesariamente lentos.
+
+## La arquitectura de islas de Astro
+
+Astro introduce el concepto de **islas de componentes**. Por defecto, todo se renderiza en el servidor en tiempo de build y se envía HTML puro al cliente.
+
+```astro
+---
+// Este componente NO envía JS al cliente
+const posts = await getCollection('posts');
+---
+
+<ul>
+  {posts.map(post => <li>{post.data.title}</li>)}
+</ul>
+```
+
+Si necesitas interactividad en algún componente concreto (un buscador, un formulario), puedes hidratarlo selectivamente:
+
+```astro
+<SearchWidget client:load />
+```
+
+## Resultados reales
+
+Con esta arquitectura, este blog consigue:
+
+| Métrica | Valor |
+|---------|-------|
+| Lighthouse Performance | 99 |
+| LCP | 0.8s |
+| CLS | 0.0 |
+| Total Blocking Time | 0ms |
+
+## Content Collections
+
+La killer feature para blogs es **Content Collections**: un sistema tipado con TypeScript y Zod que valida tu frontmatter en tiempo de desarrollo.
+
+```typescript
+const posts = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    publishedAt: z.coerce.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+```
+
+Si te olvidas un campo obligatorio o escribes una fecha mal formateada, el build falla con un error claro. Adiós a los bugs silenciosos en producción.
+
+## Conclusión
+
+Si tu proyecto es principalmente contenido, Astro es la elección correcta. Cero JavaScript por defecto, rendimiento excepcional y una DX que ya quisieran otros frameworks.

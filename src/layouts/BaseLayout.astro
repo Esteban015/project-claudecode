@@ -1,0 +1,64 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SEO from '../components/SEO.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  canonicalURL?: string;
+  publishedAt?: Date;
+  updatedAt?: Date;
+  structuredData?: Record<string, unknown>;
+}
+
+const {
+  title,
+  description = 'Blog personal sobre desarrollo web, tecnología y más.',
+  ogImage,
+  ogType = 'website',
+  canonicalURL,
+  publishedAt,
+  updatedAt,
+  structuredData,
+} = Astro.props;
+
+const canonical = canonicalURL ?? new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      ogImage={ogImage}
+      ogType={ogType}
+      publishedAt={publishedAt}
+      updatedAt={updatedAt}
+      structuredData={structuredData}
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body class="bg-bg-primary text-text-primary min-h-screen flex flex-col antialiased">
+    <Header />
+    <main class="flex-1 animate-fade-in">
+      <slot />
+    </main>
+    <Footer />
+    {!import.meta.env.DEV && <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />}
+  </body>
+</html>

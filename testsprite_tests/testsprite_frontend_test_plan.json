@@ -1,0 +1,663 @@
+[
+  {
+    "id": "TC001",
+    "title": "Homepage post cards display reading time",
+    "description": "Verifies that the homepage latest posts list includes reading time on each visible post card.",
+    "category": "Reading time calculation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the latest posts list is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify each visible post card shows a reading time value"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Dark theme styling is applied on initial load",
+    "description": "Verifies that the homepage loads with dark theme styling applied and not as unstyled content.",
+    "category": "Dark theme UI and responsive layout",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the page uses a dark theme appearance"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the layout is styled and readable"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Post page includes required SEO meta and canonical tags",
+    "description": "This test verifies that a post page includes core SEO metadata (title/description), Open Graph/Twitter tags, and a canonical URL link in the document head.",
+    "category": "SEO metadata and structured data",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog/2026/04/seo-en-2026"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the page includes meta title and meta description"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify Open Graph, Twitter card, and canonical link tags are present"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Search returns results and opens a post",
+    "description": "Verifies that opening header search lazy-loads Pagefind and a user can search and open a result that renders as a post page.",
+    "category": "Pagefind client-side search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the header search toggle"
+      },
+      {
+        "type": "action",
+        "description": "Fill a common keyword into the search field"
+      },
+      {
+        "type": "action",
+        "description": "Click the first search result"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an individual blog post page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the post content is rendered"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Open a tag page from the homepage tag cloud",
+    "description": "This test verifies that a reader can navigate from the homepage tag cloud to a tag-filtered listing and see posts displayed for that tag.",
+    "category": "Tag filtering and Tag Cloud",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a tag link in the tag cloud"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the tag-filtered posts listing is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify at least one post is displayed in the listing"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Individual post page displays reading time",
+    "description": "Verifies that a user can open a post and see a reading time value on the post page.",
+    "category": "Reading time calculation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the first post card in the latest posts list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an individual blog post page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a reading time value is displayed on the post page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "CSS asset endpoint is reachable",
+    "description": "Verifies that the compiled stylesheet can be requested successfully to prevent unstyled UI in normal browsing.",
+    "category": "Dark theme UI and responsive layout",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /assets/styles.css"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the stylesheet content is displayed as a CSS file"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "View posts for a specific tag via direct tag route",
+    "description": "This test verifies that visiting a known tag route shows a list of posts that match the selected tag.",
+    "category": "Tag filtering and Tag Cloud",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /tag/astro"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the tag page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify at least one post is displayed in the listing"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Post page includes JSON-LD Article structured data",
+    "description": "This test verifies that a post page includes JSON-LD structured data describing the article for search engines.",
+    "category": "SEO metadata and structured data",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog/2026/04/seo-en-2026"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify JSON-LD structured data for an Article is present"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the post page content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Sitemap index includes homepage and blog listing URLs",
+    "description": "Verifies that the sitemap index includes entries for core listing routes such as the homepage and blog index.",
+    "category": "Sitemap",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /sitemap-index.xml"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the sitemap includes an entry for the homepage and a blog listing page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Sticky header remains available after scrolling",
+    "description": "Verifies that the header remains accessible after scrolling down the homepage to support navigation and search.",
+    "category": "Dark theme UI and responsive layout",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll down near the bottom of the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the header is still visible and usable"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC012",
+    "title": "Tag cloud displays tag names and counts",
+    "description": "This test verifies that the homepage tag cloud displays tags with visible counts and that each tag is presented as a navigable link.",
+    "category": "Tag filtering and Tag Cloud",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a tag cloud is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify tag entries show both a tag name and a count and are presented as links"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC013",
+    "title": "RSS feed is accessible and contains post entries",
+    "description": "Verifies that the RSS feed can be opened and returns an RSS XML document that includes item entries for posts.",
+    "category": "RSS Feed",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /rss.xml"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an RSS XML document is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the feed contains multiple item entries"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC014",
+    "title": "RSS feed includes valid post links",
+    "description": "Verifies that the RSS feed contains clickable links that point to post pages under the blog path.",
+    "category": "RSS Feed",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /rss.xml"
+      },
+      {
+        "type": "action",
+        "description": "Click the first feed item link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a blog post page is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC015",
+    "title": "Sitemap index is accessible and is valid XML",
+    "description": "Verifies that the sitemap index page can be opened and displays an XML sitemap index document.",
+    "category": "Sitemap",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /sitemap-index.xml"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an XML sitemap index document is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC016",
+    "title": "Archive page shows posts grouped by year",
+    "description": "This test verifies that the archive page renders a chronological index grouped by year with posts listed under year headings.",
+    "category": "Blog archive",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog/archivo"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the archive page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify posts are grouped under year headings"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC017",
+    "title": "Search supports an empty query result state",
+    "description": "Verifies that searching for a nonsense term shows a clear no-results state without breaking the page.",
+    "category": "Pagefind client-side search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the header search toggle"
+      },
+      {
+        "type": "action",
+        "description": "Fill a gibberish term into the search field"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an empty search results state is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the search UI remains usable"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC018",
+    "title": "Archive page allows opening a post from a year group",
+    "description": "This test verifies that a reader can open an individual post by clicking a post entry from the archive index.",
+    "category": "Blog archive",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog/archivo"
+      },
+      {
+        "type": "action",
+        "description": "Click a post link within a year group"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an individual post page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the post content is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC019",
+    "title": "Subscriber can submit a valid email from the footer newsletter form",
+    "description": "Verifies that entering a valid email in the footer newsletter form and submitting shows a success confirmation in the UI.",
+    "category": "Newsletter subscription form",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the footer"
+      },
+      {
+        "type": "action",
+        "description": "Fill user@example.com into the newsletter email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the newsletter form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a subscription success confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC020",
+    "title": "Return to the homepage after viewing a tag page",
+    "description": "This test verifies that a reader can return to the homepage from a tag listing using normal in-app navigation.",
+    "category": "Tag filtering and Tag Cloud",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a tag link in the tag cloud"
+      },
+      {
+        "type": "action",
+        "description": "Click the site logo or home link in the header"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the homepage"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the latest posts section is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC021",
+    "title": "Sitemap index contains multiple URL entries",
+    "description": "Verifies that the sitemap index includes more than one URL entry, indicating broad coverage of site pages.",
+    "category": "Sitemap",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /sitemap-index.xml"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the sitemap contains multiple URL entries"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC022",
+    "title": "Search UI can be opened and closed without losing page context",
+    "description": "Verifies that the search overlay/panel can be toggled on and off and the user returns to normal page browsing.",
+    "category": "Pagefind client-side search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the header search toggle"
+      },
+      {
+        "type": "action",
+        "description": "Click the header search toggle again"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the search UI is no longer visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the homepage content is still displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC023",
+    "title": "Newsletter form blocks invalid email with client-side validation",
+    "description": "Verifies that submitting the newsletter form with an invalid email shows a validation error and does not show a success confirmation.",
+    "category": "Newsletter subscription form",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the footer"
+      },
+      {
+        "type": "action",
+        "description": "Fill invalid-email into the newsletter email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the newsletter form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an email validation error is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC024",
+    "title": "Post with missing frontmatter degrades gracefully in SEO output",
+    "description": "This test verifies that a post page with missing required frontmatter still renders while showing observable missing SEO elements rather than breaking the page.",
+    "category": "SEO metadata and structured data",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog/bad-frontmatter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the post page content is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify expected SEO elements such as canonical and Open Graph image are not present"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC025",
+    "title": "Show empty state for a tag with no posts",
+    "description": "This test verifies that visiting a tag page with no published posts shows an empty-state message rather than a broken or blank page.",
+    "category": "Tag filtering and Tag Cloud",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /tag/unused-tag"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an empty state message is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no posts are displayed in the listing"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC026",
+    "title": "RSS feed provides a stable empty-state behavior when no items are visible",
+    "description": "Verifies that if the RSS feed renders without visible items, the page still displays a valid RSS XML document rather than a blank page.",
+    "category": "RSS Feed",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /rss.xml"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an RSS XML document is displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC027",
+    "title": "Dev-mode search shows an informative message when the index is missing",
+    "description": "Verifies that when the Pagefind index is not present, opening search shows an informative dev-mode message instead of a broken UI.",
+    "category": "Pagefind client-side search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the header search toggle"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an informative message about the missing search index is displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC028",
+    "title": "Newsletter form prevents submission when email is empty",
+    "description": "Verifies that submitting the newsletter form with an empty email shows a required-field validation error.",
+    "category": "Newsletter subscription form",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the footer"
+      },
+      {
+        "type": "action",
+        "description": "Clear the newsletter email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the newsletter form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a required email validation error is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC029",
+    "title": "Malformed post does not show a valid reading time",
+    "description": "Verifies that a known malformed post renders but indicates a missing or zero reading time value rather than showing an incorrect normal value.",
+    "category": "Reading time calculation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog/broken-post"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an individual blog post page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the reading time value is missing or zero"
+      }
+    ],
+    "priority": "Low"
+  }
+]

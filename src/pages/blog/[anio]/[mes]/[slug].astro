@@ -1,0 +1,38 @@
+---
+import PostLayout from '../../../../layouts/PostLayout.astro';
+import { getPublishedPosts, getReadingTime, getPostHref } from '../../../../utils/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+
+  return posts.map((post, index) => {
+    const { publishedAt } = post.data;
+    const year = publishedAt.getFullYear();
+    const month = String(publishedAt.getMonth() + 1).padStart(2, '0');
+
+    const prevPost = posts[index + 1];
+    const nextPost = posts[index - 1];
+
+    return {
+      params: {
+        anio: String(year),
+        mes: month,
+        slug: post.slug,
+      },
+      props: {
+        post,
+        readingTime: getReadingTime(post.body),
+        prevPost: prevPost ? { title: prevPost.data.title, href: getPostHref(prevPost) } : undefined,
+        nextPost: nextPost ? { title: nextPost.data.title, href: getPostHref(nextPost) } : undefined,
+      },
+    };
+  });
+}
+
+const { post, readingTime, prevPost, nextPost } = Astro.props;
+const { Content } = await post.render();
+---
+
+<PostLayout post={post} readingTime={readingTime} prevPost={prevPost} nextPost={nextPost}>
+  <Content />
+</PostLayout>

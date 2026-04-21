@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:4321",
+  "executionArgs": {
+    "projectName": "Project-claudecode",
+    "projectPath": "C:\\Users\\Esteban\\Project-claudecode",
+    "testIds": [],
+    "additionalInstruction": "Blog estático con Astro. Testear: listado de posts en homepage, navegación a post individual, filtrado por categoría y tag, página de archivo, formulario de newsletter con validación de email, navegación del header, y que las imágenes de portada se muestren en las cards.",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-TWOpN2-NWTSujWHW7Y9Zt3m_3HEQqRM00-5UejboCe1oxOir7tC15wsQ-0fzKXLXxF8KVSN4ciQsRFYyALOGYnZuwV3vRlZ0o9hLDQLH74BVywa97albCNbv6LpkYMffuJo"
+    }
+  },
+  "serverPort": 62609,
+  "proxy": "http://8a51e90d-9c3d-4867-9b01-c8379b3da719:DIx7rUUksyNCXO17OaX9ugLDR4W3nGox@tun.testsprite.com:8080"
+}

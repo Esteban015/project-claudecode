@@ -1,0 +1,68 @@
+---
+title: "SEO técnico en 2026: la guía definitiva"
+description: "Core Web Vitals, structured data, Open Graph y todas las señales técnicas que Google valora hoy."
+publishedAt: 2026-04-10
+category: "seo"
+tags: ["seo", "core-web-vitals", "structured-data", "open-graph"]
+cover:
+  src: "/covers/seo.svg"
+  alt: "Diagrama de señales SEO con métricas Core Web Vitals"
+draft: false
+---
+
+# SEO técnico en 2026: la guía definitiva
+
+El SEO técnico sigue siendo uno de los pilares más infravalorados del marketing digital. Mientras todos hablan de contenido y backlinks, los cimientos técnicos determinan si Google puede rastrear e indexar tu sitio correctamente.
+
+## Core Web Vitals en 2026
+
+Google sigue usando los CWV como señal de ranking. Los umbrales actuales son:
+
+| Métrica | Bueno | Necesita mejora | Malo |
+|---------|-------|-----------------|------|
+| LCP | < 2.5s | 2.5 - 4s | > 4s |
+| INP | < 200ms | 200 - 500ms | > 500ms |
+| CLS | < 0.1 | 0.1 - 0.25 | > 0.25 |
+
+> **Nota**: INP (Interaction to Next Paint) reemplazó a FID como métrica de interactividad en 2024.
+
+## Structured Data: JSON-LD
+
+Los fragmentos enriquecidos en los SERPs aumentan significativamente el CTR. Para un blog, lo mínimo es implementar `Article`:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Título del artículo",
+  "datePublished": "2026-04-10",
+  "author": {
+    "@type": "Person",
+    "name": "Esteban"
+  }
+}
+```
+
+## Open Graph: no subestimes las redes sociales
+
+Cuando alguien comparte tu artículo en LinkedIn o Twitter, las meta tags OG determinan qué imagen y título se muestran. Una imagen bien diseñada puede triplicar los clics.
+
+```html
+<meta property="og:title" content="Mi artículo" />
+<meta property="og:image" content="https://mi-blog.com/og/articulo.png" />
+<meta property="og:type" content="article" />
+```
+
+## Sitemap XML dinámico
+
+Un sitemap actualizado le dice a Google exactamente qué URLs tiene tu sitio. Con `@astrojs/sitemap`, se genera automáticamente en cada build.
+
+## Canonical URLs
+
+Si tienes contenido que puede ser accedido desde múltiples URLs (paginación, filtros), las canonicals evitan que Google las trate como contenido duplicado.
+
+```html
+<link rel="canonical" href="https://mi-blog.com/blog/2026/04/mi-post" />
+```
+
+Implementar estas técnicas correctamente puede marcar la diferencia entre la primera y la tercera página de resultados.

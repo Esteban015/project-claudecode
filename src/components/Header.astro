@@ -1,0 +1,70 @@
+---
+const navLinks = [
+  { href: '/', label: 'Inicio' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/blog/archivo', label: 'Archivo' },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b border-border bg-bg-primary/80 backdrop-blur-md">
+  <nav class="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+    <a href="/" class="flex items-center gap-2 font-bold text-lg text-text-primary hover:text-accent-primary transition-colors">
+      <span class="text-accent-primary text-2xl">⬡</span>
+      Mi Blog
+    </a>
+
+    <div class="flex items-center gap-1">
+      {
+        navLinks.map(({ href, label }) => (
+          <a
+            href={href}
+            class:list={[
+              'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+              pathname === href
+                ? 'bg-accent-primary/20 text-accent-primary'
+                : 'text-text-muted hover:text-text-primary hover:bg-bg-secondary',
+            ]}
+          >
+            {label}
+          </a>
+        ))
+      }
+      <button
+        id="search-toggle"
+        aria-label="Buscar"
+        class="ml-2 p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-secondary transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <div id="search-overlay" class="hidden border-t border-border bg-bg-primary px-4 sm:px-6 py-4">
+    <div id="search-container" class="max-w-5xl mx-auto"></div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('search-toggle');
+  const overlay = document.getElementById('search-overlay');
+  let initialized = false;
+
+  toggle?.addEventListener('click', async () => {
+    overlay?.classList.toggle('hidden');
+    if (!initialized && !overlay?.classList.contains('hidden')) {
+      initialized = true;
+      try {
+        const path = '/pagefind/pagefind-ui.js';
+        const { PagefindUI } = await import(/* @vite-ignore */ path);
+        new PagefindUI({ element: '#search-container', showSubResults: true });
+      } catch {
+        const container = document.getElementById('search-container');
+        if (container) container.innerHTML = '<p style="color:#9CA3AF;font-size:0.875rem">La búsqueda solo está disponible en producción (tras el build).</p>';
+      }
+    }
+  });
+</script>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F0F1A"/>
+      <stop offset="100%" style="stop-color:#1A1A2E"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#4F46E5"/>
+    </linearGradient>
+    <radialGradient id="spotlight" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#7C3AED;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#0F0F1A;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#spotlight)"/>
+  <polygon points="600,200 680,245 680,335 600,380 520,335 520,245" fill="url(#accent)"/>
+  <text x="600" y="320" font-family="system-ui, sans-serif" font-size="90" font-weight="700" fill="white" text-anchor="middle">M</text>
+  <text x="600" y="430" font-family="system-ui, sans-serif" font-size="42" font-weight="700" fill="#E5E7EB" text-anchor="middle">Mi Blog</text>
+  <text x="600" y="475" font-family="system-ui, sans-serif" font-size="20" fill="#9CA3AF" text-anchor="middle">Desarrollo web · Tecnología · Aprendizaje</text>
+</svg>
