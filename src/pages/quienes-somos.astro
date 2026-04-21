@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="¿Quiénes somos?"
+  description="Conoce al equipo detrás de Mi Blog y nuestra misión de compartir conocimiento sobre desarrollo web y tecnología."
+>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 animate-fade-up">
+
+    <!-- Hero -->
+    <div class="mb-12">
+      <p class="text-accent-primary font-semibold text-sm mb-2 uppercase tracking-wider">Sobre nosotros</p>
+      <h1 class="text-4xl sm:text-5xl font-bold text-text-primary leading-tight mb-4">
+        ¿Quiénes somos?
+      </h1>
+      <p class="text-lg text-text-muted leading-relaxed">
+        Somos un equipo apasionado por el desarrollo web, las tecnologías modernas y el aprendizaje continuo.
+        Este blog nació con un propósito simple: compartir lo que aprendemos para que otros no tengan que
+        descubrirlo solos.
+      </p>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-px bg-border mb-12"></div>
+
+    <!-- Misión -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-text-primary mb-4">Nuestra misión</h2>
+      <p class="text-text-muted leading-relaxed mb-4">
+        Creemos que el conocimiento técnico debe ser accesible para todos. Por eso escribimos artículos
+        claros y prácticos sobre desarrollo web, herramientas modernas, rendimiento y buenas prácticas.
+      </p>
+      <p class="text-text-muted leading-relaxed">
+        No escribimos para impresionar — escribimos para que puedas aprender algo nuevo y aplicarlo
+        el mismo día.
+      </p>
+    </section>
+
+    <!-- Valores -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-text-primary mb-6">Lo que nos mueve</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-bg-secondary border border-border rounded-xl p-6">
+          <div class="text-3xl mb-3">⚡</div>
+          <h3 class="font-semibold text-text-primary mb-2">Rendimiento</h3>
+          <p class="text-sm text-text-muted leading-relaxed">
+            Obsesionados con los Core Web Vitals y las experiencias web rápidas y eficientes.
+          </p>
+        </div>
+        <div class="bg-bg-secondary border border-border rounded-xl p-6">
+          <div class="text-3xl mb-3">🛠️</div>
+          <h3 class="font-semibold text-text-primary mb-2">Herramientas</h3>
+          <p class="text-sm text-text-muted leading-relaxed">
+            Probamos y evaluamos las herramientas más modernas del ecosistema frontend.
+          </p>
+        </div>
+        <div class="bg-bg-secondary border border-border rounded-xl p-6">
+          <div class="text-3xl mb-3">📖</div>
+          <h3 class="font-semibold text-text-primary mb-2">Claridad</h3>
+          <p class="text-sm text-text-muted leading-relaxed">
+            Explicamos conceptos complejos de forma simple, sin rodeos ni tecnicismos innecesarios.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Equipo -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-text-primary mb-6">El equipo</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+        <div class="flex items-start gap-4 bg-bg-secondary border border-border rounded-xl p-6">
+          <div class="w-12 h-12 rounded-full bg-accent-primary/20 border border-accent-primary/40 flex items-center justify-center text-xl shrink-0">
+            E
+          </div>
+          <div>
+            <h3 class="font-semibold text-text-primary">Esteban</h3>
+            <p class="text-xs text-accent-primary mb-2">Fundador & Editor principal</p>
+            <p class="text-sm text-text-muted leading-relaxed">
+              Desarrollador frontend con pasión por Astro, el rendimiento web y las experiencias de usuario minimalistas.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 bg-bg-secondary border border-border rounded-xl p-6">
+          <div class="w-12 h-12 rounded-full bg-accent-primary/20 border border-accent-primary/40 flex items-center justify-center text-xl shrink-0">
+            ✦
+          </div>
+          <div>
+            <h3 class="font-semibold text-text-primary">Colaboradores</h3>
+            <p class="text-xs text-accent-primary mb-2">Comunidad</p>
+            <p class="text-sm text-text-muted leading-relaxed">
+              Este blog crece gracias a la comunidad. ¿Quieres contribuir? Escríbenos desde la página de contacto.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="bg-bg-secondary border border-border rounded-xl p-8 text-center">
+      <h3 class="text-xl font-bold text-text-primary mb-2">¿Tienes algo que decir?</h3>
+      <p class="text-text-muted text-sm mb-6">
+        Nos encanta recibir feedback, sugerencias de temas o simplemente un saludo.
+      </p>
+      <a
+        href="/contacto"
+        class="inline-block px-6 py-2.5 bg-accent-primary hover:bg-accent-hover text-white text-sm font-medium rounded-lg transition-colors"
+      >
+        Escríbenos →
+      </a>
+    </div>
+
+  </div>
+</BaseLayout>
